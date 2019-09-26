@@ -2,6 +2,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ChatRoom from '../ChatRoom'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const App = (props) => {
   const { chatRoomId, currentUser } = props
