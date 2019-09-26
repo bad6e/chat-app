@@ -3,8 +3,8 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 
-import { API_ROOT, API_WEB_SOCKETS_ROOT, CHANNEL_ID } from '../constants'
 import ActionCable from 'actioncable'
+import { API_ROOT, API_WEB_SOCKETS_ROOT, CHANNEL_ID } from '../constants'
 import Messages from './Messages'
 import NewMessageForm from './Form'
 
@@ -22,15 +22,14 @@ class ChatRoom extends React.Component {
       .then(data => this.setState(
         {
           chatRoom: data.chatRoom,
-          messages: data.messages
+          messages: data.messages,
         }
-      )
-    )
+      ))
 
     this.cable = ActionCable.createConsumer(API_WEB_SOCKETS_ROOT)
     this.cable.subscriptions.create({ channel: CHANNEL_ID, chat_room_id: chatRoomId }, {
       initialized: () => {
-       console.log(`Initialized and connected to ${CHANNEL_ID}`)
+        console.log(`Initialized and connected to ${CHANNEL_ID}`)
       },
       received: (message) => {
         this.handleReceivedMessage(message)
@@ -43,13 +42,12 @@ class ChatRoom extends React.Component {
   }
 
   handleReceivedMessage = (message) => {
-    this.setState({
-      messages: [...this.state.messages, message]
-    })
+    const { messages } = this.state
+    this.setState({ messages: [...messages, message] })
   }
 
   scrollToBottom = () => {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
   }
 
   render = () => {
@@ -60,10 +58,17 @@ class ChatRoom extends React.Component {
       <Container className="mt-5">
         <Row>
           <Col>
-            <h2>Chat Room: {title}</h2>
-            <h5>Logged in as {currentUser.name}</h5>
+            <h2>
+              Chat Room:
+              {' '}
+              {title}
+            </h2>
+            <h5>
+              Logged in as
+              {' '}
+              {currentUser.name}
+            </h5>
             <hr />
-
           </Col>
         </Row>
         <Row className="mt-3">
@@ -73,9 +78,8 @@ class ChatRoom extends React.Component {
               chatRoomId={chatRoomId}
               currentUser={currentUser}
             />
-            <div style={{ float: "left", clear: "both" }}
-              ref={(el) => { this.messagesEnd = el }}>
-            </div>
+            <div style={{ float: 'left', clear: 'both' }}
+              ref={(el) => { this.messagesEnd = el }} />
           </Col>
         </Row>
       </Container>

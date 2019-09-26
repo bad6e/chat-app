@@ -22,7 +22,8 @@ const Messages = ({ messages }) => {
             className="mr-1"
             src={message.userProfileUrl}
             roundedCircle />
-          <b>{message.name}</b>: {formatTime(message.createdAt)}
+          <b>{message.name}</b>
+          {formatTime(message.createdAt)}
           <br />
           <div className="mt-3">
             {message.content}
@@ -39,8 +40,7 @@ const Messages = ({ messages }) => {
   )
 }
 
-Messages.propTypes = {
-  messages: PropTypes.array,
-}
+Messages.propTypes = { messages: PropTypes.array }
+Messages.defaultProps = { messages: [] }
 
 export default Messages
